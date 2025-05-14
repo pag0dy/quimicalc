@@ -1,0 +1,7 @@
+asgiref==3.8.1
+Django==5.2
+numpy==2.2.5
+periodictable==2.0.2
+pyparsing==3.2.3
+pyvalem==2.8.0
+sqlparse==0.5.3

@@ -1,0 +1,6 @@
+services:
+  - type: web
+    name: quimicalc
+    env: python
+    buildCommand: ""
+    startCommand: gunicorn quimicalc.wsgi:application
