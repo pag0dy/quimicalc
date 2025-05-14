@@ -1,0 +1,14 @@
+{% extends "calculos/base.html" %}
+
+{% block content %}
+<h2>Cálculo de moles</h2>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Calcular</button>
+</form>
+
+{% if resultado is not None %}
+    <p><strong>Resultado:</strong> {{ resultado }} mol</p>
+{% endif %}
+{% endblock %}

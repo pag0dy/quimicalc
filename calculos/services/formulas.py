@@ -1,3 +1,4 @@
+from pyvalem.formula import Formula
 import periodictable as pt
 
 def calcular_formula_empirica(masas: dict[str, float]) -> dict:
@@ -14,7 +15,7 @@ def calcular_formula_empirica(masas: dict[str, float]) -> dict:
     proporciones = {el: round(mol / menor) for el, mol in moles.items()}
     return proporciones
 
-def calcular_formula_molecular(empirica: dict, masa_molar_real: float) -> dict:
+def calcular_formula_molecular(empirica_str: str, masa_molar_real: float) -> dict:
     """Función para calcular la fórmula molecular
 
     Args:
@@ -24,6 +25,7 @@ def calcular_formula_molecular(empirica: dict, masa_molar_real: float) -> dict:
     Returns:
         dict: _description_
     """
-    masa_empirica = sum(getattr(pt, el).mass * cant for el, cant in empirica.items())
+    atomos = Formula(empirica_str).atom_stoich
+    masa_empirica = sum(getattr(pt, el).mass * cant for el, cant in atomos.items())
     factor = round(masa_molar_real / masa_empirica)
-    return {el: cant * factor for el, cant in empirica.items()}
+    return {el: cant * factor for el, cant in atomos.items()}

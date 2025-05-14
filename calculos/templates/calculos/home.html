@@ -1,0 +1,9 @@
+{% extends "calculos/base.html" %}
+
+{% block content %}
+<h2>Selecciona un cálculo químico:</h2>
+<ul>
+    <li><a href="{% url 'calculo_moles' %}">Cálculo de moles</a></li>
+    <li><a href="{% url 'calculo_masa_molar' %}">Cálculo de masa molar</a></li>
+</ul>
+{% endblock %}

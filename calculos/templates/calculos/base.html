@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Calculadora Química</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            margin: 2rem;
+        }
+        nav {
+            margin-bottom: 1.5rem;
+        }
+        nav a {
+            margin-right: 15px;
+            text-decoration: none;
+            color: #0077cc;
+        }
+        nav a:hover {
+            text-decoration: underline;
+        }
+        hr {
+            margin-top: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <h1>🧪 Calculadora Química</h1>
+    <nav>
+        <a href="{% url 'home' %}">Inicio</a>
+        <a href="{% url 'calculo_moles' %}">Moles</a>
+        <a href="{% url 'calculo_masa_molar' %}">Masa Molar</a>
+        <a href="{% url 'calculo_composicion' %}">Composicion Porcentual</a>
+        <a href="{% url 'calculo_formula_empirica' %}">Fórmula empírica</a>
+        <a href="{% url 'calculo_formula_molecular' %}">Fórmula molecular</a>
+    </nav>
+    <hr>
+    {% block content %}{% endblock %}
+</body>
+</html>
