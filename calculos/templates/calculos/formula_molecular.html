@@ -2,6 +2,9 @@
 
 {% block content %}
 <h2>Cálculo de fórmula molecular</h2>
+<p>Ingresa la fórmula empírica (como CH₂O) y la masa molar real del compuesto.</p>
+<p><strong>Ejemplo:</strong> Fórmula empírica = CH2O, Masa molar real = 180.16 → Resultado: C6H12O6</p>
+<hr>
 <form method="post">
     {% csrf_token %}
     {{ form.as_p }}

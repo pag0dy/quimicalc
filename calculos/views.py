@@ -6,7 +6,7 @@ from .services.masa_molar import calcular_masa_molar
 from .forms.composicion import ComposicionForm
 from .services.composicion import calcular_composicion_porcentual
 from .forms.formula_empirica import FormulaEmpiricaForm
-from .services.formulas import calcular_formula_empirica
+from .services.formulas import calcular_formula_empirica, parsear_composicion
 from .forms.formula_molecular import FormulaMolecularForm
 from .services.formulas import calcular_formula_molecular
 
@@ -77,12 +77,8 @@ def calcular_formula_empirica_view(request):
         form = FormulaEmpiricaForm(request.POST)
         if form.is_valid():
             try:
-                masas = {}
-                for campo in form.cleaned_data:
-                    valor = form.cleaned_data[campo]
-                    if valor:
-                        simbolo = campo[0].upper()
-                        masas[simbolo] = valor
+                datos = form.cleaned_data["datos"]
+                masas = parsear_composicion(datos)
                 resultado = calcular_formula_empirica(masas)
             except Exception as e:
                 error = f"Error: {str(e)}"

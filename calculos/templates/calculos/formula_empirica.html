@@ -2,7 +2,9 @@
 
 {% block content %}
 <h2>Cálculo de fórmula empírica</h2>
-<p>Ingresa la composición porcentual de cada elemento.</p>
+<p>Ingresa la composición porcentual o masa de cada elemento.</p>
+<p><strong>Ejemplo:</strong> C=40, H=6.71, O=53.29 → Resultado: CH₂O</p>
+<hr>
 <form method="post">
     {% csrf_token %}
     {{ form.as_p }}

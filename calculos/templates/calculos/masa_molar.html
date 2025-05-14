@@ -2,6 +2,9 @@
 
 {% block content %}
 <h2>Cálculo de masa molar</h2>
+<p>Ingresa la fórmula química del compuesto. Usa notación estándar: letras con números, sin espacios.</p>
+<p><strong>Ejemplo:</strong> C6H12O6 → Resultado ≈ 180.16 g/mol</p>
+<hr>
 <form method="post">
     {% csrf_token %}
     {{ form.as_p }}

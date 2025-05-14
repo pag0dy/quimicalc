@@ -29,3 +29,17 @@ def calcular_formula_molecular(empirica_str: str, masa_molar_real: float) -> dic
     masa_empirica = sum(getattr(pt, el).mass * cant for el, cant in atomos.items())
     factor = round(masa_molar_real / masa_empirica)
     return {el: cant * factor for el, cant in atomos.items()}
+
+def parsear_composicion(composicion_str: str) -> dict[str, float]:
+    """Parsea un string como 'C=40, H=6.71' a {'C': 40.0, 'H': 6.71}"""
+    try:
+        partes = composicion_str.split(",")
+        elementos = {}
+        for parte in partes:
+            if "=" not in parte:
+                continue
+            simbolo, valor = parte.strip().split("=")
+            elementos[simbolo.strip()] = float(valor.strip())
+        return elementos
+    except Exception:
+        raise ValueError("Formato inválido. Usa: C=40, H=6.71, O=53.29")

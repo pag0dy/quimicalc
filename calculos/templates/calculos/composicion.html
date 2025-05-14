@@ -2,6 +2,9 @@
 
 {% block content %}
 <h2>Composición porcentual</h2>
+<p>Ingresa la fórmula química del compuesto para calcular el porcentaje en masa de cada elemento.</p>
+<p><strong>Ejemplo:</strong> H2O → Resultado: H = 11.19%, O = 88.81%</p>
+<hr>
 <form method="post">
     {% csrf_token %}
     {{ form.as_p }}
