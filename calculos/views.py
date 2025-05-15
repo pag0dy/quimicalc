@@ -9,6 +9,8 @@ from .forms.formula_empirica import FormulaEmpiricaForm
 from .services.formulas import calcular_formula_empirica, parsear_composicion
 from .forms.formula_molecular import FormulaMolecularForm
 from .services.formulas import calcular_formula_molecular
+from .forms.avogadro import AvogadroForm
+from .services.avogadro import calcular_particulas
 
 
 def home_view(request):
@@ -22,6 +24,7 @@ def calcular_moles_view(request):
             masa = form.cleaned_data["masa"]
             masa_molar = form.cleaned_data["masa_molar"]
             resultado = calcular_moles(masa, masa_molar)
+            resultado = round(resultado, 2)
     else:
         form = MolesForm()
 
@@ -119,5 +122,33 @@ def calcular_formula_molecular_view(request):
     return render(request, "calculos/formula_molecular.html", {
         "form": form,
         "formula_str": formula_molecular_str,
+        "error": error
+    })
+    
+def formatear_exponente(n: float, decimales: int = 2) -> str:
+    """Convierte un número en notación científica estilo químico"""
+    base, exponente = f"{n:.{decimales}e}".split("e")
+    exp = int(exponente)
+    return f"{base} × 10<sup>{exp}</sup>"
+
+def calcular_avogadro_view(request):
+    resultado_html = None
+    error = None
+
+    if request.method == "POST":
+        form = AvogadroForm(request.POST)
+        if form.is_valid():
+            try:
+                moles = form.cleaned_data["moles"]
+                resultado = calcular_particulas(moles)
+                resultado_html = formatear_exponente(resultado)
+            except Exception as e:
+                error = f"Error: {str(e)}"
+    else:
+        form = AvogadroForm()
+
+    return render(request, "calculos/avogadro.html", {
+        "form": form,
+        "resultado": resultado_html,
         "error": error
     })

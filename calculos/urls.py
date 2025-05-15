@@ -5,7 +5,8 @@ from .views import (
     home_view, 
     calcular_composicion_view, 
     calcular_formula_empirica_view,
-    calcular_formula_molecular_view
+    calcular_formula_molecular_view,
+    calcular_avogadro_view
 )
 
 urlpatterns = [
@@ -15,4 +16,5 @@ urlpatterns = [
     path("composicion/", calcular_composicion_view, name="calculo_composicion"),
     path("formula-empirica/", calcular_formula_empirica_view, name="calculo_formula_empirica"),
     path("formula-molecular/", calcular_formula_molecular_view, name="calculo_formula_molecular"),
+    path("avogadro/", calcular_avogadro_view, name="calculo_avogadro")
 ]

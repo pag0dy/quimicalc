@@ -1,0 +1,19 @@
+{% extends "calculos/base.html" %}
+
+{% block content %}
+<h2>Cálculo de partículas con número de Avogadro</h2>
+<p>Ingresa la cantidad de moles.</p>
+<p><strong>Ejemplo:</strong> 2 mol de H₂O → Resultado: 1.204 × 10²⁴ partículas</p>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Calcular</button>
+</form>
+
+{% if error %}
+    <p style="color: red;"><strong>{{ error }}</strong></p>
+{% elif resultado %}
+    <h3>Resultado:</h3>
+    <p>{{  resultado|safe }} partículas.</p>
+{% endif %}
+{% endblock %}
