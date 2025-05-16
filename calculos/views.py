@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from .forms.moles import MolesForm
 from .forms.masa_molar import MasaMolarForm
-from .services.moles import calcular_moles
+from .services.moles import calcular_moles, convertir_a_gramos
 from .services.masa_molar import calcular_masa_molar
 from .forms.composicion import ComposicionForm
 from .services.composicion import calcular_composicion_porcentual
@@ -10,7 +10,8 @@ from .services.formulas import calcular_formula_empirica, parsear_composicion
 from .forms.formula_molecular import FormulaMolecularForm
 from .services.formulas import calcular_formula_molecular
 from .forms.avogadro import AvogadroForm
-from .services.avogadro import calcular_particulas
+from .services.avogadro import calcular_particulas, calcular_moles_desde_particulas
+from .forms.particulas_a_moles import ParticulasAMolesForm
 
 
 def home_view(request):
@@ -22,13 +23,17 @@ def calcular_moles_view(request):
         form = MolesForm(request.POST)
         if form.is_valid():
             masa = form.cleaned_data["masa"]
+            unidad = form.cleaned_data["unidad"]
             masa_molar = form.cleaned_data["masa_molar"]
-            resultado = calcular_moles(masa, masa_molar)
-            resultado = round(resultado, 2)
+            masa_g = convertir_a_gramos(masa, unidad)
+            resultado = calcular_moles(masa_g, masa_molar)
     else:
         form = MolesForm()
 
-    return render(request, "calculos/moles.html", {"form": form, "resultado": resultado})
+    return render(request, "calculos/moles.html", {
+        "form": form,
+        "resultado": resultado
+    })
 
 def calcular_masa_molar_view(request):
     resultado = None
@@ -150,5 +155,29 @@ def calcular_avogadro_view(request):
     return render(request, "calculos/avogadro.html", {
         "form": form,
         "resultado": resultado_html,
+        "error": error
+    })
+
+def calcular_moles_de_particulas_view(request):
+    resultado = None
+    tipo = None
+    error = None
+
+    if request.method == "POST":
+        form = ParticulasAMolesForm(request.POST)
+        if form.is_valid():
+            try:
+                particulas = form.cleaned_data["particulas"]
+                tipo = form.cleaned_data["tipo"]
+                resultado = calcular_moles_desde_particulas(particulas)
+            except Exception as e:
+                error = f"Error: {str(e)}"
+    else:
+        form = ParticulasAMolesForm()
+
+    return render(request, "calculos/moles_desde_particulas.html", {
+        "form": form,
+        "resultado": resultado,
+        "tipo": tipo,
         "error": error
     })
