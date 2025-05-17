@@ -32,6 +32,55 @@
             border-radius: 8px;
             font-size: 1.2rem;
         }
+        .menu-toggle {
+            display: none;
+            background-color: #0077cc;
+            color: white;
+            padding: 8px 12px;
+            border: none;
+            border-radius: 4px;
+            font-size: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        nav ul.menu {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 1rem 0;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        nav ul.menu li {
+            display: inline;
+        }
+
+        nav ul.menu a {
+            text-decoration: none;
+            color: #0077cc;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: inline-block;
+            }
+
+            nav ul.menu {
+                display: none;
+                flex-direction: column;
+                gap: 0;
+            }
+
+            nav ul.menu.show {
+                display: flex;
+            }
+
+            nav ul.menu li {
+                margin-bottom: 10px;
+            }
+        }
     </style>
     <script>
     MathJax = {
@@ -46,15 +95,23 @@
 <body>
     <h1>🧪 Calculadora Química</h1>
     <nav>
-        <a href="{% url 'home' %}">Inicio</a>
-        <a href="{% url 'calculo_moles' %}">Moles</a>
-        <a href="{% url 'calculo_masa_molar' %}">Masa Molar</a>
-        <a href="{% url 'calculo_composicion' %}">Composicion Porcentual</a>
-        <a href="{% url 'calculo_formula_empirica' %}">Fórmula empírica</a>
-        <a href="{% url 'calculo_formula_molecular' %}">Fórmula molecular</a>
-        <a href="{% url 'calculo_avogadro' %}">Cálculo de partículas</a>
+    <button class="menu-toggle" onclick="toggleMenu()">☰ Menú</button>
+        <ul id="menu" class="menu">
+            <li><a href="{% url 'home' %}">Inicio</a></li>
+            <li><a href="{% url 'calculo_moles' %}">Cálculo de moles</a></li>
+            <li><a href="{% url 'calculo_masa_molar' %}">Masa molar</a></li>
+            <li><a href="{% url 'calculo_composicion' %}">Composición porcentual</a></li>
+            <li><a href="{% url 'calculo_formula_empirica' %}">Fórmula empírica</a></li>
+            <li><a href="{% url 'calculo_formula_molecular' %}">Fórmula molecular</a></li>
+            <li><a href="{% url 'calculo_avogadro' %}">Partículas</a></li>
+        </ul>
     </nav>
     <hr>
     {% block content %}{% endblock %}
+    <script>
+    function toggleMenu() {
+        document.getElementById("menu").classList.toggle("show");
+        }
+    </script>
 </body>
 </html>
