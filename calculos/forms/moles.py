@@ -1,7 +1,7 @@
 from django import forms
 
 class MolesForm(forms.Form):
-    masa = forms.FloatField(label="Masa (g)", min_value=0)
+    masa = forms.FloatField(label="Masa", min_value=0)
     unidad = forms.ChoiceField(
         label="Unidad de masa",
         choices=[

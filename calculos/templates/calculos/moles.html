@@ -13,7 +13,7 @@
     <button type="submit" name="calculo" value="masa">Calcular desde masa</button>
 </form>
 {% if resultado_masa is not None %}
-    <p><strong>Resultado:</strong> {{ resultado_masa }} mol</p>
+    <p><strong>Resultado:</strong> {{ resultado_masa|safe }} mol</p>
 {% endif %}
 
 <hr>
@@ -31,7 +31,7 @@
 {% if error_particulas %}
     <p style="color: red;"><strong>{{ error_particulas }}</strong></p>
 {% elif resultado_particulas is not None %}
-    <p><strong>Resultado:</strong> {{ resultado_particulas }} mol ({{ tipo_particula }})</p>
+    <p><strong>Resultado:</strong> {{ resultado_particulas|safe }} mol ({{ tipo_particula }})</p>
 {% endif %}
 
 {% endblock %}

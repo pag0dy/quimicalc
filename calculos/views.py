@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from .forms.moles import MolesForm
 from .forms.masa_molar import MasaMolarForm
-from .services.moles import calcular_moles, convertir_a_gramos
+from .services.moles import calcular_moles
 from .services.masa_molar import calcular_masa_molar
 from .forms.composicion import ComposicionForm
 from .services.composicion import calcular_composicion_porcentual
@@ -12,6 +12,7 @@ from .services.formulas import calcular_formula_molecular
 from .forms.avogadro import AvogadroForm
 from .services.avogadro import calcular_particulas, calcular_moles_desde_particulas
 from .forms.particulas_a_moles import ParticulasAMolesForm
+from .services.utils import formatear_exponente, convertir_a_gramos
 
 
 def home_view(request):
@@ -34,7 +35,7 @@ def calcular_moles_view(request):
                 unidad = form_masa.cleaned_data["unidad"]
                 masa_molar = form_masa.cleaned_data["masa_molar"]
                 masa_g = convertir_a_gramos(masa, unidad)
-                resultado_masa = round(calcular_moles(masa_g, masa_molar), 2)
+                resultado_masa = calcular_moles(masa_g, masa_molar)
 
         elif request.POST.get("calculo") == "particulas":
             form_particulas = ParticulasAMolesForm(request.POST)
@@ -149,12 +150,6 @@ def calcular_formula_molecular_view(request):
         "formula_str": formula_molecular_str,
         "error": error
     })
-    
-def formatear_exponente(n: float, decimales: int = 2) -> str:
-    """Convierte un número en notación científica estilo químico"""
-    base, exponente = f"{n:.{decimales}e}".split("e")
-    exp = int(exponente)
-    return f"{base} × 10<sup>{exp}</sup>"
 
 def calcular_avogadro_view(request):
     resultado_html = None

@@ -1,13 +1,4 @@
-CONVERSIONES_MASA = {
-    "ug": 1e-6,
-    "mg": 1e-3,
-    "g": 1,
-    "kg": 1e3,
-    "ton": 1e6,
-}
-
-def convertir_a_gramos(valor: float, unidad: str) -> float:
-    return valor * CONVERSIONES_MASA[unidad]
+from .utils import formatear_exponente
 
 def calcular_moles(masa: float, masa_molar: float) -> float:
     """Función para calcular número de moles (n)
@@ -19,8 +10,10 @@ def calcular_moles(masa: float, masa_molar: float) -> float:
     Returns:
         float: moles (n)
     """
-    moles = round(masa / masa_molar, 2)
-    return moles
+    moles = masa / masa_molar
+    if moles < 0.001:
+        return formatear_exponente(moles)
+    return round(moles, 2)
 
 
 def calcular_numero_particulas(moles: float) -> float:
