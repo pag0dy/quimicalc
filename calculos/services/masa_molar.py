@@ -14,4 +14,5 @@ def calcular_masa_molar(formula_str: str) -> float:
     masa_total = 0
     for el, cant in formula.atom_stoich.items():
         masa_total += getattr(pt, el).mass * cant
-    return masa_total
+    resultado = round(masa_total, 2)
+    return resultado

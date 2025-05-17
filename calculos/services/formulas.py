@@ -39,7 +39,7 @@ def parsear_composicion(composicion_str: str) -> dict[str, float]:
             if "=" not in parte:
                 continue
             simbolo, valor = parte.strip().split("=")
-            elementos[simbolo.strip()] = float(valor.strip())
+            elementos[simbolo.strip().capitalize()] = float(valor.strip())
         return elementos
     except Exception:
         raise ValueError("Formato inválido. Usa: C=40, H=6.71, O=53.29")

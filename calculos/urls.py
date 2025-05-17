@@ -7,7 +7,6 @@ from .views import (
     calcular_formula_empirica_view,
     calcular_formula_molecular_view,
     calcular_avogadro_view,
-    calcular_moles_de_particulas_view
 )
 
 urlpatterns = [
@@ -18,5 +17,4 @@ urlpatterns = [
     path("formula-empirica/", calcular_formula_empirica_view, name="calculo_formula_empirica"),
     path("formula-molecular/", calcular_formula_molecular_view, name="calculo_formula_molecular"),
     path("avogadro/", calcular_avogadro_view, name="calculo_avogadro"),
-    path("moles-desde-particulas/", calcular_moles_de_particulas_view, name="calculo_moles_desde_particulas"),
 ]

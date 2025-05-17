@@ -1,5 +1,54 @@
 {% extends "calculos/base.html" %}
 
 {% block content %}
-<p>Página web que te permite hacer cálculos químicos.</p>
+<p>En esta página podrás realizar los siguientes cálculos:</p>
+<h2>Cálculo de moles usando masa y masa molar</h2>
+<p><strong>Fórmula utilizada:</strong></p>
+<div class="formula-box">$$\text{Moles} = \frac{\text{masa (g)}}{\text{masa molar (g/mol)}}$$</div>
+<hr>
+<h2>Cálculo de moles a partir de partículas</h2>
+<p><strong>Fórmula utilizada:</strong></p>
+<div class="formula-box">$$
+\text{Moles} = \frac{\text{número de partículas}}{6.022 \times 10^{23}}
+$$</div>
+<hr>
+<h2>Cálculo de masa molar</h2>
+<p><strong>Fórmula utilizada:</strong></p>
+<div class="formula-box">$$\text{Masa molar} = \sum_{i=1}^n (\text{cantidad}_i \times \text{masa atómica}_i)$$</div>
+<hr>
+<h2>Composición porcentual</h2>
+<p><strong>Fórmula utilizada:</strong></p>
+<div class="formula-box">$$
+\%\text{ de elemento} = \left( \frac{\text{masa del elemento en 1 mol}}{\text{masa molar del compuesto}} \right) \times 100
+$$</div>
+<hr>
+<h2>Cálculo de fórmula empírica</h2>
+<p><strong>Proceso utilizado:</strong></p>
+<ul>
+  <li>Convertir la masa o porcentaje de cada elemento a moles:</li>
+</ul>
+<div class="formula-box">$$
+\text{moles} = \frac{\text{masa del elemento}}{\text{masa atómica}}
+$$</div>
+<ul>
+  <li>Dividir todos los valores por el menor número de moles para obtener proporciones enteras.</li>
+</ul>
+<hr>
+<h2>Cálculo de fórmula molecular</h2>
+<p><strong>Fórmulas utilizadas:</strong></p>
+<p>1. Calcular la masa molar de la fórmula empírica:</p>
+<div class="formula-box">$$
+\text{masa empírica} = \sum (\text{elemento}_i \times \text{masa atómica}_i)
+$$</div>
+<p>2. Calcular el factor multiplicativo:</p>
+<div class="formula-box">$$
+n = \frac{\text{masa molar real}}{\text{masa empírica}}
+$$</div>
+<p>3. Multiplicar la fórmula empírica por <i>n</i>.</p>
+<hr>
+<h2>Cálculo de partículas con número de Avogadro</h2>
+<p><strong>Fórmula utilizada:</strong></p>
+<div class="formula-box">$$
+\text{Número de partículas} = \text{moles} \times 6.022 \times 10^{23}
+$$</div>
 {% endblock %}

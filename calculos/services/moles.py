@@ -19,7 +19,8 @@ def calcular_moles(masa: float, masa_molar: float) -> float:
     Returns:
         float: moles (n)
     """
-    return masa / masa_molar
+    moles = round(masa / masa_molar, 2)
+    return moles
 
 
 def calcular_numero_particulas(moles: float) -> float:

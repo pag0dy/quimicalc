@@ -18,21 +18,41 @@ def home_view(request):
     return render(request, "calculos/home.html")
 
 def calcular_moles_view(request):
-    resultado = None
+    resultado_masa = None
+    resultado_particulas = None
+    tipo_particula = None
+    error_particulas = None
+
+    form_masa = MolesForm()
+    form_particulas = ParticulasAMolesForm()
+
     if request.method == "POST":
-        form = MolesForm(request.POST)
-        if form.is_valid():
-            masa = form.cleaned_data["masa"]
-            unidad = form.cleaned_data["unidad"]
-            masa_molar = form.cleaned_data["masa_molar"]
-            masa_g = convertir_a_gramos(masa, unidad)
-            resultado = calcular_moles(masa_g, masa_molar)
-    else:
-        form = MolesForm()
+        if request.POST.get("calculo") == "masa":
+            form_masa = MolesForm(request.POST)
+            if form_masa.is_valid():
+                masa = form_masa.cleaned_data["masa"]
+                unidad = form_masa.cleaned_data["unidad"]
+                masa_molar = form_masa.cleaned_data["masa_molar"]
+                masa_g = convertir_a_gramos(masa, unidad)
+                resultado_masa = round(calcular_moles(masa_g, masa_molar), 2)
+
+        elif request.POST.get("calculo") == "particulas":
+            form_particulas = ParticulasAMolesForm(request.POST)
+            if form_particulas.is_valid():
+                try:
+                    particulas = form_particulas.cleaned_data["particulas"]
+                    tipo_particula = form_particulas.cleaned_data["tipo"]
+                    resultado_particulas = round(calcular_moles_desde_particulas(particulas), 2)
+                except Exception as e:
+                    error_particulas = f"Error: {str(e)}"
 
     return render(request, "calculos/moles.html", {
-        "form": form,
-        "resultado": resultado
+        "form_masa": form_masa,
+        "form_particulas": form_particulas,
+        "resultado_masa": resultado_masa,
+        "resultado_particulas": resultado_particulas,
+        "tipo_particula": tipo_particula,
+        "error_particulas": error_particulas,
     })
 
 def calcular_masa_molar_view(request):
@@ -155,29 +175,5 @@ def calcular_avogadro_view(request):
     return render(request, "calculos/avogadro.html", {
         "form": form,
         "resultado": resultado_html,
-        "error": error
-    })
-
-def calcular_moles_de_particulas_view(request):
-    resultado = None
-    tipo = None
-    error = None
-
-    if request.method == "POST":
-        form = ParticulasAMolesForm(request.POST)
-        if form.is_valid():
-            try:
-                particulas = form.cleaned_data["particulas"]
-                tipo = form.cleaned_data["tipo"]
-                resultado = calcular_moles_desde_particulas(particulas)
-            except Exception as e:
-                error = f"Error: {str(e)}"
-    else:
-        form = ParticulasAMolesForm()
-
-    return render(request, "calculos/moles_desde_particulas.html", {
-        "form": form,
-        "resultado": resultado,
-        "tipo": tipo,
         "error": error
     })

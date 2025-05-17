@@ -22,7 +22,25 @@
         hr {
             margin-top: 1rem;
         }
+        .formula-box {
+            display: inline-block;
+            background-color: #f8f9fa;
+            border: 1px solid #ccc;
+            padding: 0.75rem 1rem;
+            margin: 1.5rem 0;
+            border-radius: 8px;
+            font-size: 1.2rem;
+        }
     </style>
+    <script>
+    MathJax = {
+    tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']]
+    }
+    };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </head>
 <body>
     <h1>🧪 Calculadora Química</h1>
@@ -34,7 +52,6 @@
         <a href="{% url 'calculo_formula_empirica' %}">Fórmula empírica</a>
         <a href="{% url 'calculo_formula_molecular' %}">Fórmula molecular</a>
         <a href="{% url 'calculo_avogadro' %}">Cálculo de partículas</a>
-        <a href="{% url 'calculo_moles_desde_particulas' %}">Partículas → Moles</a>
     </nav>
     <hr>
     {% block content %}{% endblock %}
