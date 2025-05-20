@@ -1,19 +1,54 @@
 from pyvalem.formula import Formula
 import periodictable as pt
+from mendeleev import element
 
-def calcular_formula_empirica(masas: dict[str, float]) -> dict:
-    """Función para calcular la fórmula empírica
+def calcular_formula_empirica(composicion_porcentual: dict):
+    """
+    Calcula la fórmula empírica a partir de la composición porcentual.
 
     Args:
-        masas (dict[str, float]): _description_
+        composicion_porcentual (dict): Un diccionario donde las claves son
+                                       los símbolos de los elementos (ej. 'C', 'H', 'O')
+                                       y los valores son sus porcentajes en masa.
 
     Returns:
-        dict: _description_
+        str: La fórmula empírica del compuesto.
     """
-    moles = {el: masa / getattr(pt, el).mass for el, masa in masas.items()}
-    menor = min(moles.values())
-    proporciones = {el: round(mol / menor) for el, mol in moles.items()}
-    return proporciones
+    moles = {}
+    for elemento, porcentaje in composicion_porcentual.items():
+        try:
+            masa_atomica = element(elemento).atomic_weight
+        except Exception:
+            raise AttributeError(f"No se encontró la masa atómica para '{elemento}'. "
+                  "Asegúrate de que el símbolo del elemento es correcto.")
+        
+        gramos = porcentaje
+        moles[elemento] = gramos / masa_atomica
+
+    min_moles = min(moles.values())
+
+    proporcion_moles = {elem: m / min_moles for elem, m in moles.items()}
+
+    multiplicador = 1
+    while True:
+        todos_enteros = True
+        for valor in proporcion_moles.values():
+            print(f"valor: {valor}")
+            if abs(round(valor * multiplicador) - (valor * multiplicador)) > 0.01:
+                todos_enteros = False
+                break
+        if todos_enteros:
+            break
+        multiplicador += 1
+        if multiplicador > 10:
+            raise ValueError("Advertencia: No se pudo encontrar una proporción entera simple. Intenta ajustar la tolerancia.")
+
+    formula_empirica_dict = {
+        elem: int(round(moles_ajustados * multiplicador))
+        for elem, moles_ajustados in proporcion_moles.items()
+    }
+    return formula_empirica_dict
+
 
 def calcular_formula_molecular(empirica_str: str, masa_molar_real: float) -> dict:
     """Función para calcular la fórmula molecular
