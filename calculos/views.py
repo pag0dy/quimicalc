@@ -172,3 +172,7 @@ def calcular_avogadro_view(request):
         "resultado": resultado_html,
         "error": error
     })
+
+
+def creditos_view(request):
+    return render(request, "calculos/creditos.html")
